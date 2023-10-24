@@ -1,0 +1,38 @@
+{
+    "menu": [
+      {
+        "url": "/",
+        "name": "Dashboard",
+        "icon": "menu-icon tf-icons bx bx-home-circle",
+        "slug": "dashboard-analytics"
+      },
+      {
+        "menuHeader": "Finance"
+      },
+      {
+        "url": "/admin/invoice",
+        "role_id": 2,
+        "name": "Invoice",
+        "icon": "menu-icon tf-icons bx bx bx-task",
+        "slug": "pages-account-settings"
+      },
+      {
+        "menuHeader": "Configuration"
+      },
+      {
+        "url": "/admin/batch",
+        "role_id": 2,
+        "name": "Batch Managament",
+        "icon": "menu-icon tf-icons bx bx bx-cog",
+        "slug": "pages-account-settings"
+      },
+      {
+        "url": "/admin/location",
+        "role_id": 2,
+        "name": "Location Managament",
+        "icon": "menu-icon tf-icons bx bx bx-cog",
+        "slug": "pages-account-settings"
+      }
+    ]
+  }
+  

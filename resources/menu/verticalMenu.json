@@ -1,0 +1,83 @@
+{
+    "menu": [
+      {
+        "url": "/",
+        "name": "Dashboard",
+        "icon": "menu-icon tf-icons bx bx-home-circle",
+        "slug": "dashboard-analytics"
+      },
+      {
+        "menuHeader": "Main Menu"
+      },
+      {
+        "url": "/calendar",
+        "role_id": 1,
+        "name": "Calendar",
+        "icon": "menu-icon tf-icons bx bx bx-calendar-x",
+        "slug": "pages-account-settings"
+      },
+      {
+        "url": "/admin/students",
+        "role_id": 1,
+        "name": "Student Managament",
+        "icon": "menu-icon tf-icons bx bx bx-user-pin",
+        "slug": "pages-account-settings"
+      },
+      {
+        "url": "/admin/users",
+        "role_id": 1,
+        "name": "Users Managament",
+        "icon": "menu-icon tf-icons bx bx bx-user",
+        "slug": "pages-account-settings"
+      },
+      {
+        "url": "/admin/students",
+        "role_id": 3,
+        "name": "Student Managament",
+        "icon": "menu-icon tf-icons bx bx bx-user-pin",
+        "slug": "pages-account-settings"
+      },
+      {
+        "url": "/admin/students",
+        "role_id": 4,
+        "name": "Student Managament",
+        "icon": "menu-icon tf-icons bx bx bx-user-pin",
+        "slug": "pages-account-settings"
+      },
+      {
+        "menuHeader": "Finance"
+      },
+      {
+        "url": "/admin/invoice",
+        "role_id": 1,
+        "name": "Invoice",
+        "icon": "menu-icon tf-icons bx bx bx-task",
+        "slug": "pages-account-settings"
+      },
+      {
+        "url": "/admin/invoice",
+        "role_id": 2,
+        "name": "Invoice",
+        "icon": "menu-icon tf-icons bx bx bx-task",
+        "slug": "pages-account-settings"
+      },
+      {
+        "menuHeader": "Configuration"
+      },
+      {
+        "url": "/admin/batch",
+        "role_id": 1,
+        "name": "Batch Managament",
+        "icon": "menu-icon tf-icons bx bx bx-cog",
+        "slug": "pages-account-settings"
+      },
+      {
+        "url": "/admin/location",
+        "role_id": 1,
+        "name": "Location Managament",
+        "icon": "menu-icon tf-icons bx bx bx-cog",
+        "slug": "pages-account-settings"
+      }
+    ]
+  }
+  

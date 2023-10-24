@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Repositories\Student;
+
+use Helper;
+use Auth;
+use Carbon\Carbon;
+use App\Models\Student;
+use App\Models\Transaction;
+use App\Models\Payment;
+use App\Http\Requests\StudentRequest;
+use App\Http\Requests\StudentUpdateRequest;
+use App\Traits\Upload;
+
+class EloquentStudentRepository implements StudentRepository
+{
+    use Upload;
+
+    public function fetchStudent()
+    {
+        $query_builder = Student::where('status', 1);
+        return $query_builder;
+    }
+
+    public function fetchStudentById($id)
+    {
+        $student = $this->fetchStudent()->where('id', $id)->first();
+        return $student;
+    }
+
+    public function insertStudent(StudentRequest $request)
+    {
+        $student = new Student;
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->location_id = $request->location_id;
+        $student->batch_id = $request->batch_id;
+        $student->address = $request->address;
+        $student->phone_number = $request->phone_number;
+        if ($request->hasFile('ktp_file')) {
+            $student->ktp_file = $this->UploadFile($request->file('ktp_file'), 'ktp');
+        }
+        if ($request->hasFile('ijazah_file')) {
+            $student->ijazah_file = $this->UploadFile($request->file('ijazah_file'), 'ijazah');
+        }
+        $student->save();
+
+        $price = 4000000;
+
+        $transaction = new Transaction;
+        $transaction->student_id = $student->id;
+        $transaction->total_price = $price;
+        $transaction->installment = $request->installment;
+        $transaction->ongoing_installment = 1;
+        $transaction->save();
+
+        $date = Carbon::now();
+        for($i = 1; $i <= $request->installment; $i++){
+            if($i > 1){
+                $date->addMonths($i - 1);
+            }
+            $payment = new Payment;
+            $payment->transaction_id = $transaction->id;
+            $payment->nominal = $price / $request->installment;
+            $payment->installment = $i;
+            $payment->start_date = $date->startOfMonth()->format('Y-m-d');
+            $payment->end_date = $date->lastOfMonth()->format('Y-m-d');
+            $payment->save();
+
+            $date = Carbon::now();
+        }
+        return $student;
+    }
+
+    public function updateStudent(StudentUpdateRequest $request)
+    {
+        $student = $this->fetchStudentById($request->id);
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->save();
+        if ($request->hasFile('ktp_file')) {
+            $student->ktp_file = $this->UploadFile($request->file('ktp_file'), 'ktp');
+        }
+        if ($request->hasFile('ijazah_file')) {
+            $student->ijazah_file = $this->UploadFile($request->file('ijazah_file'), 'ijazah');
+        }
+        return $student;
+    }
+
+    public function deleteStudent($id)
+    {
+        $student = $this->fetchStudentById($id);
+        if(isset($student)){
+            $student->delete();
+        }
+        return $student;
+    }
+}
