@@ -16,13 +16,19 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->nullable();
             $table->integer('location_id');
             $table->integer('batch_id');
-            $table->string('address');
+            $table->string('email')->nullable();
+            $table->string('gender')->nullable();
             $table->string('phone_number');
+            $table->date('birth_date');
+            $table->string('education')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address');
             $table->string('ktp_file')->nullable();
             $table->string('ijazah_file')->nullable();
+            $table->string('jft_status')->nullable();
+            $table->string('ssw_status')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });

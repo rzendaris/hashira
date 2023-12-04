@@ -16,10 +16,12 @@ class LocationTableSeeder extends Seeder
     public function run()
     {
         DB::table('location')->insert([
-            'name' => 'Jatimekar'
+            'name' => 'Jatimekar',
+            'price' => 8000000
         ]);
         DB::table('location')->insert([
-            'name' => 'Temanggung'
+            'name' => 'Temanggung',
+            'price' => 5000000
         ]);
     }
 }

@@ -6,6 +6,7 @@ use Helper;
 use Auth;
 use Carbon\Carbon;
 use App\Models\Location;
+use App\Http\Requests\LocationRequest;
 
 class EloquentLocationRepository implements LocationRepository
 {
@@ -14,5 +15,14 @@ class EloquentLocationRepository implements LocationRepository
     {
         $locations = Location::get();
         return $locations;
+    }
+
+    public function insertLocation(LocationRequest $request)
+    {
+        $location = new Location;
+        $location->name = $request->name;
+        $location->price = $request->price;
+        $location->save();
+        return $location;
     }
 }

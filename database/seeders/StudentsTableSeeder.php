@@ -18,7 +18,7 @@ class StudentsTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = DB::table('users')->where('role_id', 4)->get();
+        $users = DB::table('users')->where('role_id', 5)->get();
         $counter = 1;
         $price = 4000000;
         $installment = 4;

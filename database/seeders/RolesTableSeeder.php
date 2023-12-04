@@ -20,6 +20,10 @@ class RolesTableSeeder extends Seeder
             'role_slug' => 'super',
         ]);
         DB::table('roles')->insert([
+            'role_name' => 'Head Master',
+            'role_slug' => 'head',
+        ]);
+        DB::table('roles')->insert([
             'role_name' => 'Finance',
             'role_slug' => 'finance',
         ]);

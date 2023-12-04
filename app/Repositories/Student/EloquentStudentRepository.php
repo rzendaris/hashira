@@ -37,6 +37,12 @@ class EloquentStudentRepository implements StudentRepository
         $student->batch_id = $request->batch_id;
         $student->address = $request->address;
         $student->phone_number = $request->phone_number;
+        $student->gender = $request->gender;
+        $student->birth_date = $request->birth_date;
+        $student->education = $request->education;
+        $student->city = $request->city;
+        $student->jft_status = $request->jft_status;
+        $student->ssw_status = $request->ssw_status;
         if ($request->hasFile('ktp_file')) {
             $student->ktp_file = $this->UploadFile($request->file('ktp_file'), 'ktp');
         }
@@ -45,11 +51,15 @@ class EloquentStudentRepository implements StudentRepository
         }
         $student->save();
 
-        $price = 4000000;
+        $price = $student->location->price;
+
+        if($request->pay_later){
+            $price = $price / 2;
+        }
 
         $transaction = new Transaction;
         $transaction->student_id = $student->id;
-        $transaction->total_price = $price;
+        $transaction->total_price = $student->location->price;
         $transaction->installment = $request->installment;
         $transaction->ongoing_installment = 1;
         $transaction->save();
@@ -68,6 +78,14 @@ class EloquentStudentRepository implements StudentRepository
             $payment->save();
 
             $date = Carbon::now();
+        }
+
+        if($request->pay_later){
+            $payment = new Payment;
+            $payment->transaction_id = $transaction->id;
+            $payment->nominal = $price;
+            $payment->installment = $request->installment + 1;
+            $payment->save();
         }
         return $student;
     }

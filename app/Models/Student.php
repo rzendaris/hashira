@@ -11,7 +11,9 @@ class Student extends Model
     use HasFactory;
 
     protected $table = 'students';
-    protected $fillable = ['name', 'email', 'location_id', 'batch_id', 'address', 'phone_number', 'ktp_file', 'ijazah_file', 'status'];
+    protected $fillable = [
+        'name', 'email', 'location_id', 'batch_id', 'gender', 'birth_date', 'education', 'city', 'address', 'phone_number', 'ktp_file', 'ijazah_file', 'ssw_status', 'jft_status', 'status'
+    ];
 
     public function location(): HasOne
     {

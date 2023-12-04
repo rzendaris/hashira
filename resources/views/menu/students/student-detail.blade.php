@@ -69,6 +69,22 @@
                 <input class="form-control" type="text" id="email" name="email" value="{{ $data['student']->email }}" disabled />
             </div>
             <div class="mb-3 col-md-6">
+                <label for="firstName" class="form-label">Gender</label>
+                <input class="form-control" type="text" id="firstName" name="firstName" value="{{ $data['student']->gender }}" disabled />
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="email" class="form-label">Birth Date</label>
+                <input class="form-control" type="text" id="email" name="email" value="{{ $data['student']->birth_date }}" disabled />
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="firstName" class="form-label">Education</label>
+                <input class="form-control" type="text" id="firstName" name="firstName" value="{{ $data['student']->education }}" disabled />
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="email" class="form-label">City</label>
+                <input class="form-control" type="text" id="email" name="email" value="{{ $data['student']->city }}" disabled />
+            </div>
+            <div class="mb-3 col-md-6">
                 <label for="organization" class="form-label">Location</label>
                 <input type="text" class="form-control" id="organization" name="organization" value="{{ $data['student']->location->name }}" disabled />
             </div>
@@ -85,6 +101,14 @@
             <div class="mb-3 col-md-6">
                 <label for="address" class="form-label">Address</label>
                 <input type="text" class="form-control" id="address" name="address" value="{{ $data['student']->address }}" disabled/>
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="firstName" class="form-label">Ujian JFT</label>
+                <input class="form-control" type="text" id="firstName" name="firstName" value="{{ $data['student']->jft_status }}" disabled />
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="email" class="form-label">Ujian SSW</label>
+                <input class="form-control" type="text" id="email" name="email" value="{{ $data['student']->ssw_status }}" disabled />
             </div>
             <div class="mb-3 col-md-6">
                 <label for="address" class="form-label">KTP</label>

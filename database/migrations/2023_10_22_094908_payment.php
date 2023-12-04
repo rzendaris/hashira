@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('installment');
             $table->integer('nominal');
             $table->string('payment_proof')->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

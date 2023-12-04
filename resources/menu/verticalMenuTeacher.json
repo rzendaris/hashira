@@ -1,21 +1,28 @@
 {
-    "menu": [
-      {
-        "url": "/",
-        "name": "Dashboard",
-        "icon": "menu-icon tf-icons bx bx-home-circle",
-        "slug": "dashboard-analytics"
-      },
-      {
-        "menuHeader": "Main Menu"
-      },
-      {
-        "url": "/admin/students",
-        "role_id": 3,
-        "name": "Student Managament",
-        "icon": "menu-icon tf-icons bx bx bx-user-pin",
-        "slug": "pages-account-settings"
-      }
-    ]
-  }
-  
+  "menu": [
+    {
+      "url": "/",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "slug": "dashboard-analytics"
+    },
+    {
+      "menuHeader": "Main Menu"
+    },
+    {
+      "url": "/calendar",
+      "name": "Calendar",
+      "icon": "menu-icon tf-icons bx bx bx-calendar-x",
+      "slug": "pages-account-settings"
+    },
+    {
+      "menuHeader": "Student Management"
+    },
+    {
+      "url": "/admin/students",
+      "name": "Student Active",
+      "icon": "menu-icon tf-icons bx bx bx-user-pin",
+      "slug": "pages-account-settings"
+    }
+  ]
+}

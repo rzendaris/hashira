@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Students Management')
+@section('title', 'Potential Students Management')
 
 @section('content')
 <h4 class="fw-bold py-3 mb-4">
-  <span class="text-muted fw-light">Students Management /</span> Students
+  <span class="text-muted fw-light">Potential Students Management /</span> Potential Students
 </h4>
 
 <!-- Basic Bootstrap Table -->
@@ -27,18 +27,18 @@
           </ul>
       </div>
   @endif
-  <h5 class="card-header">Students</h5>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-    Add new Student
-  </button>
+  <h5 class="card-header">Potential Students</h5>
+  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+    Add new Potential Student
+  </button> -->
   <div class="table-responsive text-nowrap">
     <table class="table">
       <thead>
         <tr>
           <th>No</th>
           <th>Name</th>
-          <th>Batch</th>
-          <th>Location</th>
+          <th>Email</th>
+          <th>Gender</th>
           <th>Phone Number</th>
           <th>Status</th>
           <th>Actions</th>
@@ -49,8 +49,8 @@
           <tr>
             <td>{{ $i + 1 }}</td>
             <td><a class="nav-link" href="{{ url('admin/students/'.$data['students'][$i]->id) }}"><strong>{{ $data['students'][$i]->name }}</strong></a></td>
-            <td>{{ $data['students'][$i]->batch->name }}</td>
-            <td>{{ $data['students'][$i]->location->name }}</td>
+            <td>{{ $data['students'][$i]->email }}</td>
+            <td>{{ $data['students'][$i]->gender }}</td>
             <td>{{ $data['students'][$i]->phone_number }}</td>
             @if($data['students'][$i]->status === 1)
               <td><span class="badge bg-label-primary me-1">Active</span></td>
@@ -85,7 +85,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Add new Student</h5>
+                <h5 class="modal-title" id="modalCenterTitle">Add new Potential Student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -130,24 +130,6 @@
                   <div class="col mb-0">
                     <label for="dobWithTitle" class="form-label">City</label>
                     <input type="text" id="city" name="city" class="form-control" required>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-0">
-                    <label for="emailWithTitle" class="form-label">Location</label>
-                      <select class="form-select" id="location_id" name="location_id" required>
-                        @foreach($data['locations'] as $location)
-                          <option value="{{ $location->id }}">{{ $location->name }}</option>
-                        @endforeach
-                      </select>
-                  </div>
-                  <div class="col mb-0">
-                    <label for="dobWithTitle" class="form-label">Batch</label>
-                      <select class="form-select" id="batch_id" name="batch_id" required>
-                        @foreach($data['batchs'] as $batch)
-                          <option value="{{ $batch->id }}">{{ $batch->name }}</option>
-                        @endforeach
-                      </select>
                   </div>
                 </div>
                 <div class="row g-2">
@@ -242,50 +224,6 @@
                     <div class="col mb-0">
                       <label for="dobWithTitle" class="form-label">Phone Number</label>
                       <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ $student->phone_number }}" placeholder="+62..." required>
-                    </div>
-                  </div>
-                  <div class="row g-2">
-                    <div class="col mb-0">
-                      <label for="emailWithTitle" class="form-label">Ujian JFT</label>
-                        <select class="form-select" id="jft_status" name="jft_status" required>
-                          <option value="{{ $student->jft_status }}">{{ $student->jft_status }}</option>
-                          <option value="Belum">Belum</option>
-                          <option value="Lulus">Lulus</option>
-                          <option value="Gagal">Gagal</option>
-                        </select>
-                    </div>
-                    <div class="col mb-0">
-                      <label for="dobWithTitle" class="form-label">Ujian SSW</label>
-                        <select class="form-select" id="ssw_status" name="ssw_status" required>
-                          <option value="{{ $student->ssw_status }}">{{ $student->ssw_status }}</option>
-                          <option value="Belum">Belum</option>
-                          <option value="Lulus">Lulus</option>
-                          <option value="Gagal">Gagal</option>
-                        </select>
-                    </div>
-                  </div>
-                  <div class="row g-2">
-                    <div class="col mb-0">
-                      <label for="emailWithTitle" class="form-label">Location</label>
-                        <select class="form-select" id="location_id" name="location_id" required>
-                          <option value="{{ $student->location->id }}">{{ $student->location->name }}</option>
-                          @foreach($data['locations'] as $location)
-                            @if($location->id !== $student->location->id)
-                              <option value="{{ $location->id }}">{{ $location->name }}</option>
-                            @endif
-                          @endforeach
-                        </select>
-                    </div>
-                    <div class="col mb-0">
-                      <label for="dobWithTitle" class="form-label">Batch</label>
-                        <select class="form-select" id="batch_id" name="batch_id" required>
-                          <option value="{{ $student->batch->id }}">{{ $student->batch->name }}</option>
-                          @foreach($data['batchs'] as $batch)
-                            @if($batch->id !== $student->batch->id)
-                              <option value="{{ $batch->id }}">{{ $batch->name }}</option>
-                            @endif
-                          @endforeach
-                        </select>
                     </div>
                   </div>
                   <div class="row">

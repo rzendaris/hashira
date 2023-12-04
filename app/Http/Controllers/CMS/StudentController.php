@@ -78,4 +78,13 @@ class StudentController extends Controller
         $this->studentRepository->deleteStudent($request->id);
         return redirect()->route('student-view');
     }
+
+    public function potentialStudent(): View
+    {
+        $students = $this->studentRepository->fetchStudent()->get();
+        $data = array(
+            "students" => $students
+        );
+        return view('menu.students.potential-student')->with('data', $data);
+    }
 }

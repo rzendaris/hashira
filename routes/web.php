@@ -6,6 +6,7 @@ use App\Http\Controllers\CMS\DashboardController;
 use App\Http\Controllers\CMS\UserController;
 use App\Http\Controllers\CMS\StudentController;
 use App\Http\Controllers\CMS\PaymentController;
+use App\Http\Controllers\CMS\ConfigurationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +19,11 @@ use App\Http\Controllers\CMS\PaymentController;
 |
 */
 
-Route::get('/', [LoginController::class, 'login'])->name('login');
+Route::get('login', [LoginController::class, 'login'])->name('login');
 Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
     Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout');
     Route::get('home', [DashboardController::class, 'index'])->name('home');
     Route::get('calendar', [DashboardController::class, 'calendar'])->name('calendar');
@@ -34,7 +36,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/students/{id}', [StudentController::class, 'detail'])->name('student-detail');
     Route::get('/admin/students/{id}/installment', [StudentController::class, 'detailInstallment'])->name('student-detail-installment');
     Route::post('/admin/students/create', [StudentController::class, 'create'])->name('student-create');
-    Route::post('/admin/students/update', [StudentController::class, 'update'])->name('student-update');
+    Route::post('/admin/students/update', [StudentController::class, 'update'])->name('location-view');
+
+    Route::get('/admin/potential-students', [StudentController::class, 'potentialStudent'])->name('potential-student-view');
+
+    Route::get('/admin/configurations/location', [ConfigurationController::class, 'indexLocation'])->name('location-view');
+
+    Route::get('/admin/configurations/batch', [ConfigurationController::class, 'indexBatch'])->name('batch-view');
 
     Route::get('/admin/invoice', [PaymentController::class, 'invoice'])->name('invoice-view');
     Route::get('/invoice/{payment_id}', [PaymentController::class, 'invoicePDF'])->name('invoice-pdf');
