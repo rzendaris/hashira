@@ -8,25 +8,30 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
 use App\Repositories\Student\EloquentStudentRepository;
+use App\Repositories\Student\EloquentPotentialStudentRepository;
 use App\Repositories\Batch\EloquentBatchRepository;
 use App\Repositories\Location\EloquentLocationRepository;
 use App\Http\Requests\StudentRequest;
 use App\Http\Requests\StudentUpdateRequest;
+use App\Http\Requests\PotentialStudentRequest;
 
 class StudentController extends Controller
 {
     protected $studentRepository;
     protected $locationRepository;
     protected $batchRepository;
+    protected $potentialStudentRepository;
 
     public function __construct(
         EloquentStudentRepository $studentRepository,
         EloquentLocationRepository $locationRepository,
-        EloquentBatchRepository $batchRepository
+        EloquentBatchRepository $batchRepository,
+        EloquentPotentialStudentRepository $potentialStudentRepository
     ) {
         $this->studentRepository = $studentRepository;
         $this->locationRepository = $locationRepository;
         $this->batchRepository = $batchRepository;
+        $this->potentialStudentRepository = $potentialStudentRepository;
     }
 
     public function index(): View
@@ -81,10 +86,16 @@ class StudentController extends Controller
 
     public function potentialStudent(): View
     {
-        $students = $this->studentRepository->fetchStudent()->get();
+        $students = $this->potentialStudentRepository->fetchPotentialStudent()->get();
         $data = array(
             "students" => $students
         );
         return view('menu.students.potential-student')->with('data', $data);
+    }
+
+    public function potentialStudentCreate(PotentialStudentRequest $request): RedirectResponse
+    {
+        $this->potentialStudentRepository->insertPotentialStudent($request);
+        return redirect()->route('potential-student-view');
     }
 }

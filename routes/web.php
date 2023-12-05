@@ -39,9 +39,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/students/update', [StudentController::class, 'update'])->name('location-view');
 
     Route::get('/admin/potential-students', [StudentController::class, 'potentialStudent'])->name('potential-student-view');
+    Route::post('/admin/potential-students/create', [StudentController::class, 'potentialStudentCreate'])->name('potential-student-create');
 
     Route::get('/admin/configurations/location', [ConfigurationController::class, 'indexLocation'])->name('location-view');
-
     Route::get('/admin/configurations/batch', [ConfigurationController::class, 'indexBatch'])->name('batch-view');
 
     Route::get('/admin/invoice', [PaymentController::class, 'invoice'])->name('invoice-view');

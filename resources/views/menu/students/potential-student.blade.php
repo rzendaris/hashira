@@ -28,9 +28,9 @@
       </div>
   @endif
   <h5 class="card-header">Potential Students</h5>
-  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-    Add new Potential Student
-  </button> -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+    Bulk Insert
+  </button>
   <div class="table-responsive text-nowrap">
     <table class="table">
       <thead>
@@ -79,7 +79,7 @@
   <!-- Modal -->
   <div class="card-body">
     <div class="row gy-3">
-      <form method="post" action="{{url('admin/students/create')}}" enctype="multipart/form-data">
+      <form method="post" action="{{url('admin/potential-students/create')}}" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -91,98 +91,8 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col mb-3">
-                    <label for="nameWithTitle" class="form-label">Name</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" required>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-0">
-                    <label for="emailWithTitle" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="xxxx@xxx.xx">
-                  </div>
-                  <div class="col mb-0">
-                    <label for="dobWithTitle" class="form-label">Phone Number</label>
-                    <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="+62..." required>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-0">
-                    <label for="emailWithTitle" class="form-label">Gender</label>
-                    <select class="form-select" id="gender" name="gender" required>
-                      <option value="Laki-Laki">Laki-Laki</option>
-                      <option value="Perempuan">Perempuan</option>
-                    </select>
-                  </div>
-                  <div class="col mb-0">
-                    <label for="dobWithTitle" class="form-label">Birth Date</label>
-                    <input type="date" id="birth_date" name="birth_date" class="form-control" required>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-0">
-                    <label for="emailWithTitle" class="form-label">Education</label>
-                    <select class="form-select" id="education" name="education" required>
-                      <option value="SMA">SMA</option>
-                      <option value="SMK">SMK</option>
-                      <option value="Sarjana">Sarjana</option>
-                    </select>
-                  </div>
-                  <div class="col mb-0">
-                    <label for="dobWithTitle" class="form-label">City</label>
-                    <input type="text" id="city" name="city" class="form-control" required>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-2">
-                    <label for="emailWithTitle" class="form-label">Installments</label>
-                    <select class="form-select" id="installment" name="installment" required>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-2">
-                    <input class="form-check-input" type="checkbox" id="pay_later" name="pay_later">
-                    <label class="form-check-label" for="flexCheckDefault">
-                      Talangan Pendidikan
-                    </label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col mb-3">
-                    <label for="nameWithTitle" class="form-label">Address</label>
-                    <input type="text" id="address" name="address" class="form-control" placeholder="Enter Name" required>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-0">
-                    <label for="emailWithTitle" class="form-label">Ujian JFT</label>
-                      <select class="form-select" id="jft_status" name="jft_status" required>
-                        <option value="Belum">Belum</option>
-                        <option value="Lulus">Lulus</option>
-                        <option value="Gagal">Gagal</option>
-                      </select>
-                  </div>
-                  <div class="col mb-0">
-                    <label for="dobWithTitle" class="form-label">Ujian SSW</label>
-                      <select class="form-select" id="ssw_status" name="ssw_status" required>
-                        <option value="Belum">Belum</option>
-                        <option value="Lulus">Lulus</option>
-                        <option value="Gagal">Gagal</option>
-                      </select>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-0">
-                    <label for="emailWithTitle" class="form-label">KTP</label>
-                    <input type="file" id="ktp_file" name="ktp_file" class="form-control" required>
-                  </div>
-                  <div class="col mb-0">
-                    <label for="emailWithTitle" class="form-label">Ijazah</label>
-                    <input type="file" id="ijazah_file" name="ijazah_file" class="form-control" required>
+                    <label for="nameWithTitle" class="form-label">Upload File</label>
+                    <input type="file" id="bulk_file" name="bulk_file" class="form-control" placeholder="Enter Name" required>
                   </div>
                 </div>
               </div>
