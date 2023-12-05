@@ -39,6 +39,7 @@
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
+          <th>Location</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
@@ -50,6 +51,11 @@
             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $data['users'][$i]->name }}</strong></td>
             <td>{{ $data['users'][$i]->email }}</td>
             <td>{{ $data['users'][$i]->role->role_name }}</td>
+            @if(isset($data['users'][$i]->location))
+              <td>{{ $data['users'][$i]->location->name }}</td>
+            @else
+              <td>-</td>
+            @endif
             @if($data['users'][$i]->status === 1)
               <td><span class="badge bg-label-primary me-1">Active</span></td>
             @else
@@ -103,6 +109,17 @@
                     <select class="form-control" id="role_id" name="role_id" required>
                       @foreach($data['roles'] as $role)
                         <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mb-3">
+                    <label for="nameWithTitle" class="form-label">Location</label>
+                    <select class="form-control" id="location_id" name="location_id" required>
+                      <option value="">-</option>
+                      @foreach($data['locations'] as $location)
+                        <option value="{{ $location->id }}">{{ $location->name }}</option>
                       @endforeach
                     </select>
                   </div>
@@ -185,5 +202,16 @@
 <!--/ Basic Bootstrap Table -->
 
 <hr class="my-5">
+
+<script>
+  $("#role_id").on('change', function() {
+    const roleId = this.value;
+    if (roleId === 4 || roleId === 5) {
+      $("#location_id").prop('required', true);
+    } else {
+      $("#location_id").prop('required', false);
+    }
+  });
+</script>
 
 @endsection

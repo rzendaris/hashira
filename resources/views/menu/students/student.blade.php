@@ -28,9 +28,11 @@
       </div>
   @endif
   <h5 class="card-header">Students</h5>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-    Add new Student
-  </button>
+  @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 5)
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+      Add new Student
+    </button>
+  @endif
   <div class="table-responsive text-nowrap">
     <table class="table">
       <thead>

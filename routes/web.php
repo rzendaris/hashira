@@ -42,7 +42,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/potential-students/create', [StudentController::class, 'potentialStudentCreate'])->name('potential-student-create');
 
     Route::get('/admin/configurations/location', [ConfigurationController::class, 'indexLocation'])->name('location-view');
+    Route::post('/admin/configurations/location/create', [ConfigurationController::class, 'createLocation'])->name('location-create');
+    Route::post('/admin/configurations/location/update', [ConfigurationController::class, 'updateLocation'])->name('location-update');
     Route::get('/admin/configurations/batch', [ConfigurationController::class, 'indexBatch'])->name('batch-view');
+    Route::post('/admin/configurations/batch/create', [ConfigurationController::class, 'createBatch'])->name('batch-create');
 
     Route::get('/admin/invoice', [PaymentController::class, 'invoice'])->name('invoice-view');
     Route::get('/invoice/{payment_id}', [PaymentController::class, 'invoicePDF'])->name('invoice-pdf');

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'location_id',
         'status'
     ];
 
@@ -48,5 +49,10 @@ class User extends Authenticatable
     public function role(): HasOne
     {
         return $this->hasOne(Role::class, 'id', 'role_id');
+    }
+
+    public function location(): HasOne
+    {
+        return $this->hasOne(Location::class, 'id', 'location_id');
     }
 }

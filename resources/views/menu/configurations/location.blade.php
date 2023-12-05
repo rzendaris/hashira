@@ -28,6 +28,9 @@
       </div>
   @endif
   <h5 class="card-header">Locations</h5>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+    Add new Location
+  </button>
   <div class="table-responsive text-nowrap">
     <table class="table">
       <thead>

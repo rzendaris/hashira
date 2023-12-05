@@ -28,6 +28,9 @@
       </div>
   @endif
   <h5 class="card-header">Batchs</h5>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+    Add new Location
+  </button>
   <div class="table-responsive text-nowrap">
     <table class="table">
       <thead>
@@ -49,10 +52,7 @@
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                 <div class="dropdown-menu">
                   <button type="button" class="dropdown-item btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#editModal{{ $data['batchs'][$i]->id }}">
-                    <i class="bx bx-edit-alt me-1"></i> Edit
-                  </button>
-                  <button type="button" class="dropdown-item btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $data['batchs'][$i]->id }}">
-                    <i class="bx bx-trash me-1"></i> Delete
+                    <i class="bx bx-edit-alt me-1"></i> Detail
                   </button>
                 </div>
               </div>
@@ -126,18 +126,18 @@
                   <div class="row g-2">
                     <div class="col mb-0">
                       <label for="emailWithTitle" class="form-label">Start Date</label>
-                      <input type="date" id="start_date" name="start_date" class="form-control" value="{{ $batch->start_date }}" required>
+                      <input type="text" id="start_date" name="start_date" class="form-control" value="{{ $batch->start_date }}" required>
                     </div>
                     <div class="col mb-0">
                       <label for="emailWithTitle" class="form-label">End Date</label>
-                      <input type="date" id="end_date" name="end_date" class="form-control" value="{{ $batch->end_date }}" required>
+                      <input type="text" id="end_date" name="end_date" class="form-control" value="{{ $batch->end_date }}" required>
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
                   <input type="hidden" name="id" id="id" value="{{ $batch->id }}">
                   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Save changes</button>
+                  <!-- <button type="submit" class="btn btn-primary">Save changes</button> -->
                 </div>
               </div>
             </div>

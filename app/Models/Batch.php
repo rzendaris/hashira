@@ -12,7 +12,8 @@ class Batch extends Model
     protected $table = 'batch';
     protected $fillable = ['name', 'start_date', 'end_date'];
     protected $casts = [
-        'start_date' => 'datetime:Y-m-d',
-        'end_date' => 'datetime:Y-m-d',
+        'start_date' => 'date:Y-m-d',
+        'end_date' => 'date:Y-m-d',
     ];
+    protected $dates = ['start_date', 'end_date'];
 }
