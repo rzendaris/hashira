@@ -7,6 +7,7 @@ use App\Http\Controllers\CMS\UserController;
 use App\Http\Controllers\CMS\StudentController;
 use App\Http\Controllers\CMS\PaymentController;
 use App\Http\Controllers\CMS\ConfigurationController;
+use App\Http\Controllers\CMS\StudentReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/students/{id}/installment', [StudentController::class, 'detailInstallment'])->name('student-detail-installment');
     Route::post('/admin/students/create', [StudentController::class, 'create'])->name('student-create');
     Route::post('/admin/students/update', [StudentController::class, 'update'])->name('location-view');
+
+    Route::get('/admin/student-report', [StudentReportController::class, 'index'])->name('student-report-view');
+    Route::post('/admin/student-report/create', [StudentReportController::class, 'create'])->name('student-report-create');
+    Route::post('/admin/student-report/score', [StudentReportController::class, 'createReportScore'])->name('student-report-score');
 
     Route::get('/admin/potential-students', [StudentController::class, 'potentialStudent'])->name('potential-student-view');
     Route::post('/admin/potential-students/create', [StudentController::class, 'potentialStudentCreate'])->name('potential-student-create');

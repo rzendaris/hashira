@@ -18,7 +18,7 @@ class EloquentStudentRepository implements StudentRepository
 
     public function fetchStudent()
     {
-        $query_builder = Student::where('status', 1);
+        $query_builder = Student::with(['batch', 'report'])->where('status', 1);
         return $query_builder;
     }
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
@@ -28,5 +29,10 @@ class Student extends Model
     public function transaction(): HasOne
     {
         return $this->hasOne(Transaction::class, 'student_id', 'id');
+    }
+
+    public function report(): HasMany
+    {
+        return $this->hasMany(StudentReport::class, 'student_id', 'id');
     }
 }
