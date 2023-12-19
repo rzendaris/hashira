@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -36,7 +37,12 @@ class StudentController extends Controller
 
     public function index(): View
     {
-        $students = $this->studentRepository->fetchStudent()->get();
+        $students = $this->studentRepository->fetchStudent();
+        if(Auth::user()->role_id == 4 || Auth::user()->role_id == 5){
+            $students = $students->where('location_id', Auth::user()->location_id)->get();
+        } else {
+            $students = $students->get();
+        }
         $locations = $this->locationRepository->fetchLocation();
         $batchs = $this->batchRepository->fetchBatch();
 

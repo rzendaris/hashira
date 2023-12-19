@@ -8,8 +8,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Maatwebsite\Excel\Facades\Excel;
 
+use App\Exports\StudentReportExport;
 use App\Http\Requests\MaterialRequest;
+use App\Http\Requests\MaterialUpdateRequest;
 use App\Http\Requests\StudentReportRequest;
 use App\Repositories\Material\EloquentMaterialRepository;
 use App\Repositories\Report\EloquentStudentReportRepository;
@@ -67,9 +70,22 @@ class StudentReportController extends Controller
         return redirect()->route('student-report-view');
     }
 
+    public function update(MaterialUpdateRequest $request): RedirectResponse
+    {
+        $this->materialRepository->updateMaterial($request);
+        return redirect()->route('student-report-view');
+    }
+
     public function createReportScore(StudentReportRequest $request): RedirectResponse
     {
         $this->studentReportRepository->insertStudentReport($request);
         return redirect()->route('student-report-view');
+    }
+
+    public function download()
+    {
+        $batch = $this->batchRepository->fetchActiveBatch()->first();
+        $filename = 'Laporan '.Auth::user()->location->name.' Batch '.$batch->name.'.xlsx';
+        return Excel::download(new StudentReportExport($this->materialRepository), $filename);
     }
 }

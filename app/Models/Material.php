@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +12,7 @@ class Material extends Model
 
     protected $table = 'materials';
     protected $fillable = [
-        'name', 'task', 'note', 'location_id', 'batch_id', 'user_id', 'status'
+        'name', 'task', 'note', 'location_id', 'batch_id', 'user_id', 'status', 'created_at'
     ];
 
     public function location(): HasOne

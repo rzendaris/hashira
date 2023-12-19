@@ -41,7 +41,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/student-report', [StudentReportController::class, 'index'])->name('student-report-view');
     Route::post('/admin/student-report/create', [StudentReportController::class, 'create'])->name('student-report-create');
+    Route::post('/admin/student-report/update', [StudentReportController::class, 'update'])->name('student-report-update');
     Route::post('/admin/student-report/score', [StudentReportController::class, 'createReportScore'])->name('student-report-score');
+    Route::get('/admin/student-report/download', [StudentReportController::class, 'download'])->name('student-report-download');
 
     Route::get('/admin/potential-students', [StudentController::class, 'potentialStudent'])->name('potential-student-view');
     Route::post('/admin/potential-students/create', [StudentController::class, 'potentialStudentCreate'])->name('potential-student-create');

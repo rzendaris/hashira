@@ -27,7 +27,19 @@
           </ul>
       </div>
   @endif
+
   <h5 class="card-header">Students</h5>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="mb-1 col-3">
+        <a class="btn btn-primary" href="{{ url('admin/student-report/download') }}">
+          Download My Report ({{Auth::user()->location->name}} - {{ $data['batch']->name }})
+        </a>
+      </div>
+    </div>
+  </div>
+
   @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 4)
     @if(!isset($data['material']))
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
@@ -35,6 +47,7 @@
         </button>
     @endif
   @endif
+
   <div class="card-body">
     @if(isset($data['material']))
         <div class="row">
@@ -50,6 +63,9 @@
                 <label for="firstName" class="form-label">Note</label>
                 <textarea type="text" class="form-control" name="description" disabled>{{ $data['material']->note }}</textarea>
             </div>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalMaterial">
+            Edit
+          </button>
         </div>
     @endif
   </div>
@@ -145,6 +161,61 @@
       </form>
     </div>
   </div>
+
+  @if(isset($data['material']))
+    <div class="card-body">
+      <div class="row gy-3">
+        <form method="post" action="{{url('admin/student-report/update')}}" enctype="multipart/form-data">
+          {{csrf_field()}}
+          <div class="modal fade" id="editModalMaterial" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalCenterTitle">Update Material</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="nameWithTitle" class="form-label">Material</label>
+                      <input type="text" id="name" name="name" class="form-control" placeholder="Enter Material" value="{{ $data['material']->name }}" required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="nameWithTitle" class="form-label">Task</label>
+                      <input type="text" id="task" name="task" class="form-control" placeholder="Enter Task" value="{{ $data['material']->task }}" required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="nameWithTitle" class="form-label">Note</label>
+                      <textarea type="text" class="form-control" id="note" name="note" name="description" required> {{   $data['material']->note }}</textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="nameWithTitle" class="form-label">Batch</label>
+                      <input type="text" id="batch_id" name="batch_id" class="form-control" value="{{ $data['batch']->id }}" disabled>
+                    </div>
+                    <div class="col mb-3">
+                      <label for="nameWithTitle" class="form-label">Location</label>
+                      <input type="text" id="location_id" name="location_id" class="form-control" value="{{ Auth::user()->location->name }}" disabled>
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" id="material_id" name="material_id" value="{{ $data['material']->id }}"/>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  @endif
 
   @foreach($data['students'] as $student)
     <div class="card-body">
