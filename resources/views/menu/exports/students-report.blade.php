@@ -24,14 +24,24 @@
     @php
         $no = 1;
     @endphp
-    @foreach($materials as $material)
-        <tr>
-            <td style="border: 1px solid black; border-collapse: collapse;">{{ $no }}</td>
-            <td style="border: 1px solid black; border-collapse: collapse;">{{ Carbon\Carbon::parse($material->created_at)->format('l, d F Y') }}</td>
-            <td style="border: 1px solid black; border-collapse: collapse;">{{ $material->name }}</td>
-            <td style="border: 1px solid black; border-collapse: collapse;">{{ $material->task }}</td>
-            <td style="border: 1px solid black; border-collapse: collapse;">{{ $material->note }}</td>
-        </tr>
+    @foreach($date_range as $data)
+        @if(isset($data['material']))
+            <tr>
+                <td style="border: 1px solid black; border-collapse: collapse;">{{ $no }}</td>
+                <td style="border: 1px solid black; border-collapse: collapse;">{{ Carbon\Carbon::parse($data['material']->created_at)->format('l, d F Y') }}</td>
+                <td style="border: 1px solid black; border-collapse: collapse;">{{ $data['material']->name }}</td>
+                <td style="border: 1px solid black; border-collapse: collapse;">{{ $data['material']->task }}</td>
+                <td style="border: 1px solid black; border-collapse: collapse;">{{ $data['material']->note }}</td>
+            </tr>
+        @else
+            <tr>
+                <td style="border: 1px solid black; border-collapse: collapse;" bgcolor="#ff0000">{{ $no }}</td>
+                <td style="border: 1px solid black; border-collapse: collapse;" bgcolor="#ff0000">{{ Carbon\Carbon::parse($data['date'])->format('l, d F Y') }}</td>
+                <td style="border: 1px solid black; border-collapse: collapse;" bgcolor="#ff0000">Libur</td>
+                <td style="border: 1px solid black; border-collapse: collapse;" bgcolor="#ff0000"></td>
+                <td style="border: 1px solid black; border-collapse: collapse;" bgcolor="#ff0000"></td>
+            </tr>
+        @endif
         <tr>
             <td colspan="5" bgcolor="#be286c"></td>
         </tr>

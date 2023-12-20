@@ -13,7 +13,7 @@ class EloquentStudentReportRepository implements StudentReportRepository
 
     public function fetchStudentReport()
     {
-        $query_builder = StudentReport::where('status', 1);
+        $query_builder = StudentReport::with(['material', 'student'])->where('status', 1);
         return $query_builder;
     }
 

@@ -10,7 +10,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Maatwebsite\Excel\Facades\Excel;
 
-use App\Exports\StudentReportExport;
+use App\Exports\StudentReportExcel;
 use App\Http\Requests\MaterialRequest;
 use App\Http\Requests\MaterialUpdateRequest;
 use App\Http\Requests\StudentReportRequest;
@@ -86,6 +86,6 @@ class StudentReportController extends Controller
     {
         $batch = $this->batchRepository->fetchActiveBatch()->first();
         $filename = 'Laporan '.Auth::user()->location->name.' Batch '.$batch->name.'.xlsx';
-        return Excel::download(new StudentReportExport($this->materialRepository), $filename);
+        return Excel::download(new StudentReportExcel($this->materialRepository, $this->studentReportRepository, $batch), $filename);
     }
 }
