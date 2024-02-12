@@ -16,7 +16,7 @@
 
 @section('content')
 <div class="row">
-  <div class="col-lg-8 mb-4 order-0">
+  <!-- <div class="col-lg-8 mb-4 order-0">
     <div class="card">
       <div class="d-flex align-items-end row">
         <div class="col-sm-7">
@@ -34,8 +34,8 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="col-lg-4 col-md-4 order-1">
+  </div> -->
+  <!-- <div class="col-lg-4 col-md-4 order-1">
     <div class="row">
       <div class="col-lg-6 col-md-12 col-6 mb-4">
         <div class="card">
@@ -84,16 +84,18 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- Total Revenue -->
   <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
     <div class="card">
       <div class="row row-bordered g-0">
-        <div class="col-md-8">
-          <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
+        <div class="col-md-12">
+          <h5 class="card-header m-0 me-2 pb-3">Number of Student</h5>
+          <input type="hidden" value="{{ $data['x'] }}" name="x" id="x"/>
+          <input type="hidden" value="{{ $data['y'] }}" name="y" id="y"/>
           <div id="totalRevenueChart" class="px-2"></div>
         </div>
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
           <div class="card-body">
             <div class="text-center">
               <div class="dropdown">
@@ -131,7 +133,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

@@ -5,12 +5,14 @@ namespace App\Repositories\Payment;
 use Helper;
 use Auth;
 use Carbon\Carbon;
+use App\Traits\Upload;
 use App\Models\Payment;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Requests\PaymentFilterRequest;
 
 class EloquentPaymentRepository implements PaymentRepository
 {
+    use Upload;
 
     public function fetchPayment()
     {
@@ -44,23 +46,25 @@ class EloquentPaymentRepository implements PaymentRepository
         $now = Carbon::now();
         $payment =  $this->fetchPayment();
         if($request->month){
-            $payment = $payment->whereMonth('start_date', $request->month);
+            $payment = $payment->whereMonth('start_date', '<=', $request->month);
         } else {
-            $payment = $payment->whereMonth('start_date', $now->month);
+            $payment = $payment->whereMonth('start_date', '<=', $now->month);
         }
 
         if($request->year){
-            $payment = $payment->whereYear('start_date', $request->year);
+            $payment = $payment->whereYear('start_date', '<=', $request->year);
         } else {
-            $payment = $payment->whereYear('start_date', $now->year);
+            $payment = $payment->whereYear('start_date', '<=', $now->year);
         }
-        return $payment->get();
+        return $payment->orderBy('transaction_id')->orderBy('installment')->get();
     }
 
     public function updatePayment(PaymentRequest $request)
     {
         $payment = $this->fetchPaymentById($request->id);
-        $payment->payment_proof = "File";
+        if ($request->hasFile('payment_proof')) {
+            $payment->payment_proof = $this->UploadFile($request->file('payment_proof'), 'payment-proof');
+        }
         $payment->status = 1;
         $payment->save();
         return $payment;

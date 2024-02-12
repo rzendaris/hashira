@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\CMS;
 
 use Auth;
+use DatePeriod;
+use DateInterval;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -70,6 +73,34 @@ class StudentController extends Controller
             "student" => $student
         );
         return view('menu.students.student-detail-installment')->with('data', $data);
+    }
+
+    public function detailReport($id): View
+    {
+        $student = $this->studentRepository->fetchStudentById($id);
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod($student->batch->start_date, $interval, $student->batch->end_date);
+        $date_range = [];
+
+        foreach ($period as $dt) {
+            $period_date = $dt->format("Y-m-d");
+            $report = [];
+            foreach($student->report as $student_report){
+                if(Carbon::parse($student_report->created_at)->format('Y-m-d') === $period_date){
+                    $report = $student_report;
+                }
+            }
+            $data = array(
+                "date" => $period_date,
+                "report" => $report
+            );
+            $date_range[] = $data;
+        }
+        $data = array(
+            "student" => $student,
+            "date_range" => $date_range
+        );
+        return view('menu.students.student-detail-report')->with('data', $data);
     }
 
     public function create(StudentRequest $request): RedirectResponse

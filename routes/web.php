@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/students', [StudentController::class, 'index'])->name('student-view');
     Route::get('/admin/students/{id}', [StudentController::class, 'detail'])->name('student-detail');
     Route::get('/admin/students/{id}/installment', [StudentController::class, 'detailInstallment'])->name('student-detail-installment');
+    Route::get('/admin/students/{id}/report', [StudentController::class, 'detailReport'])->name('student-detail-report');
     Route::post('/admin/students/create', [StudentController::class, 'create'])->name('student-create');
     Route::post('/admin/students/update', [StudentController::class, 'update'])->name('location-view');
 
@@ -55,5 +56,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/configurations/batch/create', [ConfigurationController::class, 'createBatch'])->name('batch-create');
 
     Route::get('/admin/invoice', [PaymentController::class, 'invoice'])->name('invoice-view');
+    Route::post('/admin/invoice/upload-payment', [PaymentController::class, 'uploadPaymentProof'])->name('invoice-payment-proof');
     Route::get('/invoice/{payment_id}', [PaymentController::class, 'invoicePDF'])->name('invoice-pdf');
 });

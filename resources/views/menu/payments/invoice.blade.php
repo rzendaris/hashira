@@ -50,6 +50,7 @@
           <th>Nominal</th>
           <th>Payment Period</th>
           <th>Invoice PDF</th>
+          <th>Payment Proof</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
@@ -63,8 +64,14 @@
             <td>{{ $data['invoices'][$i]->installment }}</td>
             <td>Rp. {{ number_format($data['invoices'][$i]->nominal) }}</td>
             <td>{{ date('Y/m/d', strtotime($data['invoices'][$i]->start_date)) }} - {{ date('Y/m/d', strtotime($data['invoices'][$i]->end_date)) }}</td>
-            <td><a class="nav-link" href="{{ url('invoice/'.$data['invoices'][$i]->id) }}"><strong>Download Invoice</strong></a></td>
-            @if($data['invoices'][$i]->status === 1)
+            <td><a class="nav-link" href="{{ url('invoice/'.$data['invoices'][$i]->id) }}"><span class="badge bg-label-primary me-1">Download Invoice</span></a></td>
+
+            @if(isset($data['invoices'][$i]->payment_proof))
+              <td><a class="nav-link" href="{{ asset($data['invoices'][$i]->payment_proof) }}" target="_blank"><span class="badge bg-label-primary me-1">Image</span></a></td>
+            @else
+              <td></td>
+            
+            @if($data['invoices'][$i]->status == 1)
               <td><span class="badge bg-label-primary me-1">Paid</span></td>
             @else
               <td><span class="badge bg-label-warning me-1">Not Paid</span></td>
@@ -84,6 +91,63 @@
       </tbody>
     </table>
   </div>
+
+  @foreach($data['invoices'] as $invoice)
+    <div class="card-body">
+      <div class="row gy-3">
+        <form method="post" action="{{url('admin/invoice/upload-payment')}}" enctype="multipart/form-data">
+          {{csrf_field()}}
+          <div class="modal fade" id="editModal{{ $invoice->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalCenterTitle">Upload Payment Proof</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="nameWithTitle" class="form-label">Name</label>
+                      <input type="text" id="name" name="name" class="form-control" value="{{ $invoice->transaction->student->name }}" placeholder="Enter Name" disabled>
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col mb-0">
+                      <label for="emailWithTitle" class="form-label">Email</label>
+                      <input type="email" id="email" name="email" class="form-control" value="{{ $invoice->transaction->student->name }}" placeholder="xxxx@xxx.xx" disabled>
+                    </div>
+                    <div class="col mb-0">
+                      <label for="dobWithTitle" class="form-label">Installment</label>
+                      <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ $invoice->installment }}" placeholder="+62..."  disabled>
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col mb-0">
+                      <label for="emailWithTitle" class="form-label">Nominal</label>
+                      <input type="email" id="email" name="email" class="form-control" value="Rp. {{ number_format($invoice->nominal) }}" placeholder="xxxx@xxx.xx" disabled>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="nameWithTitle" class="form-label">Upload File</label>
+                      <input type="file" id="payment_proof" name="payment_proof" class="form-control" placeholder="Enter Score" required>
+                    </div>
+                  </div>
+                  <input type="hidden" id="id" name="id" value="{{ $invoice->id }}"/>
+                </div>
+                <div class="modal-footer">
+                  <input type="hidden" name="id" id="id" value="{{ $invoice->id }}">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Edit Dialog -->
+  @endforeach
 </div>
 <!--/ Basic Bootstrap Table -->
 

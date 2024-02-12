@@ -15,8 +15,8 @@
   <div class="col-md-12">
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
       <li class="nav-item"><a class="nav-link" href="{{ url('admin/students/'.$data['student']->id) }}"><i class="bx bx-user me-1"></i> Student Profile</a></li>
-      <li class="nav-item"><a class="nav-link" href="javascript:void(0);"><i class="bx bx-bell me-1"></i> Class Report</a></li>
-      <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="bx bx-link-alt me-1"></i> Payment Installments</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url('admin/students/'.$data['student']->id.'/report') }}"><i class="bx bx-bell me-1"></i> Class Report</a></li>
+      <li class="nav-item"><a class="nav-link active" href="{{ url('admin/students/'.$data['student']->id.'/installment') }}"><i class="bx bx-link-alt me-1"></i> Payment Installments</a></li>
     </ul>
     <div class="card mb-4">
     @if (session('success'))
