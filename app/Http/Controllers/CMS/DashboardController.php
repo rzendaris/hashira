@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\CMS;
 
+use Auth;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Payment\EloquentPaymentRepository;
 use App\Repositories\Batch\EloquentBatchRepository;
 use App\Repositories\Location\EloquentLocationRepository;
 use App\Repositories\Student\EloquentStudentRepository;
+use App\Repositories\Event\EloquentEventRepository;
+use App\Repositories\Material\EloquentMaterialRepository;
+use App\Http\Requests\EventRequest;
 
 class DashboardController extends Controller
 {
@@ -15,22 +20,32 @@ class DashboardController extends Controller
     protected $studentRepository;
     protected $locationRepository;
     protected $batchRepository;
+    protected $eventRepository;
+    protected $materialRepository;
 
     public function __construct(
         EloquentPaymentRepository $paymentRepository,
         EloquentStudentRepository $studentRepository,
         EloquentLocationRepository $locationRepository,
-        EloquentBatchRepository $batchRepository
+        EloquentBatchRepository $batchRepository,
+        EloquentEventRepository $eventRepository,
+        EloquentMaterialRepository $materialRepository
     ) {
         $this->paymentRepository = $paymentRepository;
         $this->studentRepository = $studentRepository;
         $this->batchRepository = $batchRepository;
         $this->locationRepository = $locationRepository;
+        $this->eventRepository = $eventRepository;
+        $this->materialRepository = $materialRepository;
     }
 
     public function index()
     {
-        $locations = $this->locationRepository->fetchLocation();
+        $locations = $this->locationRepository->fetchLocationBuilder();
+        if((int)Auth::user()->location_id !== NULL){
+            $locations = $locations->where('id', Auth::user()->location_id);
+        }
+        $locations = $locations->get();
         $series = [];
         $data_batchs = [];
         foreach($locations as $location){
@@ -53,20 +68,63 @@ class DashboardController extends Controller
             "x" => json_encode($series),
             "y" => json_encode($data_batchs)
         );
-        return view('menu.dashboard')->with('data', $data);
+
+        if((int)Auth::user()->role_id === 4){
+            $data['events'] = $this->eventRepository->fetchEventBuilder()->whereDate('start_date', '>=', Carbon::today())->orderBy('start_date')->get();
+            $data['class'] = $this->materialRepository->fetchMaterial()->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->first();
+        }
+        
+        $data['paid_pct'] = 0;
+        $data['not_paid_pct'] = 0;
+        if((int)Auth::user()->role_id === 3){
+            $now = Carbon::now();
+            $data['total_transaction'] = $this->paymentRepository->fetchPayment()->sum('nominal');
+            $data['paid'] = $this->paymentRepository->fetchPayment()->where('status', 1)->sum('nominal');
+            $data['not_paid'] = $this->paymentRepository->fetchPayment()->where('status', 0)->sum('nominal');
+            $data['paid_pct'] = round($data['paid'] / $data['total_transaction'] * 100, 0);
+            $data['not_paid_pct'] = round($data['not_paid'] / $data['total_transaction'] * 100, 0);
+            $data['invoices'] = $this->paymentRepository->fetchPayment()->where('status', 0)->whereMonth('start_date', '<=', $now->month)->whereYear('start_date', '<=', $now->year)->get();
+        }
+        dd($data);
+        return view('menu.dashboard.dashboard')->with('data', $data);
     }
 
     public function calendar()
     {
         $events = [];
-        $invoices = $this->paymentRepository->fetchPayment()->where('status', 0)->get();
-        foreach($invoices as $invoice){
+        if((int)Auth::user()->role_id !== 4){
+            $invoices = $this->paymentRepository->fetchPayment()->where('status', 0)->get();
+            foreach($invoices as $invoice){
+                $events[] = [
+                    'title' => $invoice->transaction->student->name." Invoice: ".$invoice->installment,
+                    'start' => $invoice->start_date,
+                    'url'   => "url",
+                ];
+            }
+        }
+        $add_events = $this->eventRepository->fetchEventBuilder()->get();
+        foreach($add_events as $add_event){
             $events[] = [
-                'title' => $invoice->transaction->student->name." Invoice: ".$invoice->installment,
-                'start' => $invoice->start_date,
+                'title' => $add_event->name,
+                'start' => $add_event->start_date,
                 'url'   => "url",
             ];
         }
-        return view('menu.calendar', compact('events'));
+        return view('menu.dashboard.calendar', compact('events'));
+    }
+
+    public function events()
+    {
+        $events = $this->eventRepository->fetchEventBuilder()->get();
+        $data = array(
+            "events" => $events
+        );
+        return view('menu.dashboard.event')->with('data', $data);
+    }
+
+    public function createEvent(EventRequest $request)
+    {
+        $this->eventRepository->insertEvent($request);
+        return redirect()->route('events');
     }
 }

@@ -29,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('home', [DashboardController::class, 'index'])->name('home');
     Route::get('calendar', [DashboardController::class, 'calendar'])->name('calendar');
 
+    Route::get('admin/events', [DashboardController::class, 'events'])->name('events');
+    Route::post('admin/events/create', [DashboardController::class, 'createEvent'])->name('event-create');
+
     Route::get('/admin/users', [UserController::class, 'index'])->name('user-view');
     Route::post('/admin/users/create', [UserController::class, 'create'])->name('user-create');
     Route::post('/admin/users/update', [UserController::class, 'update'])->name('user-update');

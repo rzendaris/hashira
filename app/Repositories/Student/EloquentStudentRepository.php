@@ -28,6 +28,15 @@ class EloquentStudentRepository implements StudentRepository
         return $student;
     }
 
+    public function fetchStudentFilterByTeacher($user)
+    {
+        $student = $this->fetchStudent();
+        if($user->location_id !== NULL){
+            $student = $student->where('location_id', $user->location_id);
+        }
+        return $student;
+    }
+
     public function insertStudent(StudentRequest $request)
     {
         $student = new Student;

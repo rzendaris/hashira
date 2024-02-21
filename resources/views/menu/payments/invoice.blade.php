@@ -70,6 +70,7 @@
               <td><a class="nav-link" href="{{ asset($data['invoices'][$i]->payment_proof) }}" target="_blank"><span class="badge bg-label-primary me-1">Image</span></a></td>
             @else
               <td></td>
+            @endif
             
             @if($data['invoices'][$i]->status == 1)
               <td><span class="badge bg-label-primary me-1">Paid</span></td>

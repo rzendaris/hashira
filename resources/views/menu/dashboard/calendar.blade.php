@@ -44,7 +44,7 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 // put your options and callbacks here
-                initialView: 'multiMonthYear', // dayGridMonth, multiMonthYear
+                initialView: 'dayGridMonth', // dayGridMonth, multiMonthYear
                 events: events,
                 eventLimit: true, // for all non-agenda views
                 views: {

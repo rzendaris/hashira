@@ -12,9 +12,15 @@ use App\Http\Requests\LocationUpdateRequest;
 class EloquentLocationRepository implements LocationRepository
 {
 
+    public function fetchLocationBuilder()
+    {
+        $query_builder = Location::where('id', '!=', NULL);
+        return $query_builder;
+    }
+
     public function fetchLocation()
     {
-        $locations = Location::get();
+        $locations = $this->fetchLocationBuilder()->get();
         return $locations;
     }
 

@@ -16,6 +16,12 @@
         "slug": "pages-account-settings"
       },
       {
+        "url": "/admin/events",
+        "name": "Events",
+        "icon": "menu-icon tf-icons bx bx bx-calendar-event",
+        "slug": "pages-account-settings"
+      },
+      {
         "menuHeader": "Student Management"
       },
       {
