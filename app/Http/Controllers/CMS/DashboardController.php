@@ -42,7 +42,7 @@ class DashboardController extends Controller
     public function index()
     {
         $locations = $this->locationRepository->fetchLocationBuilder();
-        if((int)Auth::user()->location_id !== NULL){
+        if(Auth::user()->location_id !== NULL){
             $locations = $locations->where('id', Auth::user()->location_id);
         }
         $locations = $locations->get();
@@ -56,7 +56,11 @@ class DashboardController extends Controller
 
             $batchs = $this->batchRepository->fetchBatchBuilder()->orderBy('id', 'ASC')->get();
             foreach($batchs as $batch){
-                $number_of_student = $this->studentRepository->fetchStudent()->where('location_id', $location->id)->where('batch_id', $batch->id)->count();
+                $number_of_student = $this->studentRepository->fetchStudent();
+                if(Auth::user()->location_id !== NULL){
+                    $number_of_student = $number_of_student->where('location_id', $location->id);
+                }
+                $number_of_student = $number_of_student->where('batch_id', $batch->id)->count();
                 $series_data['data'][] = $number_of_student;
                 if(in_array($batch->name, $data_batchs) === false){
                     $data_batchs[] = $batch->name;
@@ -85,7 +89,6 @@ class DashboardController extends Controller
             $data['not_paid_pct'] = round($data['not_paid'] / $data['total_transaction'] * 100, 0);
             $data['invoices'] = $this->paymentRepository->fetchPayment()->where('status', 0)->whereMonth('start_date', '<=', $now->month)->whereYear('start_date', '<=', $now->year)->get();
         }
-        dd($data);
         return view('menu.dashboard.dashboard')->with('data', $data);
     }
 

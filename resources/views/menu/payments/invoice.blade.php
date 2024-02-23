@@ -30,20 +30,37 @@
   <h5 class="card-header">Invoices</h5>
   
   <div class="table-responsive text-nowrap">
-    <div class="card-body">
-      <div class="btn-group">
-        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Filter By Month & Year</button>
-        <ul class="dropdown-menu">
-          @foreach($data['group_filter'] as $filter)
-            <li><a class="dropdown-item" href="{{ url('admin/invoice/?month='.$filter->month.'&year='.$filter->year) }}">{{ $filter->month_name }} - {{ $filter->year }}</a></li>
-          @endforeach
-        </ul>
+    <form method="get" action="{{url('/admin/invoice')}}">
+      <div class="card-body">
+        <div class="btn-group">
+          <label for="emailWithTitle" class="form-label">Filter By Date</label>
+          <select class="form-select" id="date_filter" name="date_filter">
+            @foreach($data['group_filter'] as $filter)
+              <option value="{{ $filter->month }}-{{ $filter->year }}">{{ $filter->month_name }} - {{ $filter->year }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="btn-group">
+          <label for="emailWithTitle" class="form-label">Filter By Location</label>
+          <select class="form-select" id="location_id" name="location_id">
+            <option value="{{ $data['location']->id }}">{{ $data['location']->name }}</option>
+            @foreach($data['location_lists'] as $location)
+              @if($data['location']->id !== $location->id)
+                <option value="{{ $location->id }}">{{ $location->name }}</option>
+              @endif
+            @endforeach
+          </select>
+        </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
       </div>
-    </div>
+    </form>
     <table class="table">
       <thead>
         <tr>
           <th>No</th>
+          <th>Location</th>
           <th>Name</th>
           <th>Email</th>
           <th>Installment</th>
@@ -59,6 +76,7 @@
         @for($i = 0; $i < count($data['invoices']); $i++)
           <tr>
             <td>{{ $i + 1 }}</td>
+            <td>{{ $data['invoices'][$i]->transaction->student->location->name }}</td>
             <td>{{ $data['invoices'][$i]->transaction->student->name }}</td>
             <td>{{ $data['invoices'][$i]->transaction->student->email }}</td>
             <td>{{ $data['invoices'][$i]->installment }}</td>

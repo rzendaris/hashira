@@ -7,6 +7,7 @@ use Auth;
 use Carbon\Carbon;
 use App\Traits\Upload;
 use App\Models\Payment;
+use App\Models\Transaction;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Requests\PaymentFilterRequest;
 
@@ -41,18 +42,27 @@ class EloquentPaymentRepository implements PaymentRepository
         return $payment_group;
     }
 
-    public function fetchPaymentFilter(PaymentFilterRequest $request)
+    public function fetchPaymentFilter(PaymentFilterRequest $request, $location_id)
     {
         $now = Carbon::now();
-        $payment =  $this->fetchPayment();
-        if($request->month){
-            $payment = $payment->whereMonth('start_date', '<=', $request->month);
+        $transactions = Transaction::whereHas(
+            'student', fn($query) => $query
+                ->where('location_id', $location_id)
+        )->pluck('id');
+        $date_filter = [NULL, NULL];
+        if($request->date_filter){
+            $date_filter = explode('-', $request->date_filter);
+        }
+
+        $payment =  $this->fetchPayment()->whereIn('transaction_id', $transactions);
+        if($date_filter[0]){
+            $payment = $payment->whereMonth('start_date', '<=', $date_filter[0]);
         } else {
             $payment = $payment->whereMonth('start_date', '<=', $now->month);
         }
 
-        if($request->year){
-            $payment = $payment->whereYear('start_date', '<=', $request->year);
+        if($date_filter[1]){
+            $payment = $payment->whereYear('start_date', '<=', $date_filter[1]);
         } else {
             $payment = $payment->whereYear('start_date', '<=', $now->year);
         }
