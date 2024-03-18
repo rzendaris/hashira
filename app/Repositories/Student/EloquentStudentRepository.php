@@ -50,6 +50,7 @@ class EloquentStudentRepository implements StudentRepository
         $student->birth_date = $request->birth_date;
         $student->education = $request->education;
         $student->city = $request->city;
+        $student->program = $request->program;
         $student->jft_status = $request->jft_status;
         $student->ssw_status = $request->ssw_status;
         if ($request->hasFile('ktp_file')) {

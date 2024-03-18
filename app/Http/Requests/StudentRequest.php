@@ -32,6 +32,7 @@ class StudentRequest extends FormRequest
             'address' => 'required',
             'phone_number' => 'required|max:255',
             'installment' => 'required',
+            'program' => 'required',
         ];
     }
 

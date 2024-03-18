@@ -102,11 +102,15 @@
                 <label for="address" class="form-label">Address</label>
                 <input type="text" class="form-control" id="address" name="address" value="{{ $data['student']->address }}" disabled/>
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3 col-md-4">
+                <label for="firstName" class="form-label">Program</label>
+                <input class="form-control" type="text" id="firstName" name="firstName" value="{{ $data['student']->program }}" disabled />
+            </div>
+            <div class="mb-3 col-md-4">
                 <label for="firstName" class="form-label">Ujian JFT</label>
                 <input class="form-control" type="text" id="firstName" name="firstName" value="{{ $data['student']->jft_status }}" disabled />
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3 col-md-4">
                 <label for="email" class="form-label">Ujian SSW</label>
                 <input class="form-control" type="text" id="email" name="email" value="{{ $data['student']->ssw_status }}" disabled />
             </div>

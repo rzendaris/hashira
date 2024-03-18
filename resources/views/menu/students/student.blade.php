@@ -179,6 +179,14 @@
                 </div>
                 <div class="row g-2">
                   <div class="col mb-0">
+                    <label for="emailWithTitle" class="form-label">Program</label>
+                      <select class="form-select" id="program" name="program" onchange="getProgramSelected(this)" required>
+                        <option value="">-</option>
+                        <option value="SSW">SSW</option>
+                        <option value="MAGANG">Magang</option>
+                      </select>
+                  </div>
+                  <div class="col mb-0">
                     <label for="emailWithTitle" class="form-label">Ujian JFT</label>
                       <select class="form-select" id="jft_status" name="jft_status" required>
                         <option value="Belum">Belum</option>
@@ -248,6 +256,14 @@
                   </div>
                   <div class="row g-2">
                     <div class="col mb-0">
+                      <label for="emailWithTitle" class="form-label">Program</label>
+                        <select class="form-select" id="program" name="program" required>
+                          <option value="{{ $student->program }}">{{ $student->program }}</option>
+                          <option value="SSW">SSW</option>
+                          <option value="MAGANG">Magang</option>
+                        </select>
+                    </div>
+                    <div class="col mb-0">
                       <label for="emailWithTitle" class="form-label">Ujian JFT</label>
                         <select class="form-select" id="jft_status" name="jft_status" required>
                           <option value="{{ $student->jft_status }}">{{ $student->jft_status }}</option>
@@ -316,4 +332,24 @@
 
 <hr class="my-5">
 
+@endsection
+
+
+@section('page-script')
+<script>
+
+    function getProgramSelected(selectObject) {
+      var value = selectObject.value;
+      var ssw_status = document.getElementById("ssw_status");
+      if(value === 'SSW'){
+        console.log("SSW > " + value);
+        ssw_status.disabled = false;
+      } else {
+        console.log("Not SSW > " + value);
+        ssw_status.disabled = true;
+      }
+    }
+    $(document).ready(function () {
+    });
+</script>
 @endsection
