@@ -73,8 +73,8 @@ class DashboardController extends Controller
             "y" => json_encode($data_batchs)
         );
 
+        $data['events'] = $this->eventRepository->fetchEventBuilder()->whereDate('start_date', '>=', Carbon::today())->orderBy('start_date')->get();
         if((int)Auth::user()->role_id === 4){
-            $data['events'] = $this->eventRepository->fetchEventBuilder()->whereDate('start_date', '>=', Carbon::today())->orderBy('start_date')->get();
             $data['class'] = $this->materialRepository->fetchMaterial()->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->first();
         }
         

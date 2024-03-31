@@ -30,21 +30,26 @@
 
   <h5 class="card-header">Students</h5>
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="mb-1 col-3">
-        <a class="btn btn-primary" href="{{ url('admin/student-report/download') }}">
-          Download My Report ({{Auth::user()->location->name}} - {{ $data['batch']->name }})
-        </a>
+  @if(isset($data['stundents']))
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="mb-1 col-3">
+          <a class="btn btn-primary" href="{{ url('admin/student-report/download') }}">
+            Download My Report ({{Auth::user()->location->name}} - {{ $data['batch']->name }})
+          </a>
+        </div>
       </div>
     </div>
-  </div>
+  @endif
 
-  @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 4)
-    @if(!isset($data['material']))
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-        Add new Material
-        </button>
+
+  @if(isset($data['stundents']))
+    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 4)
+      @if(!isset($data['material']))
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+          Add new Material
+          </button>
+      @endif
     @endif
   @endif
 
@@ -105,6 +110,12 @@
                 </tr>
                 @endfor
             </tbody>
+        @else
+          <tbody class="table-border-bottom-0">
+            <tr>
+              <td colspan="7" style="text-align:center"><b><i>No Active Batch</i></b></td>
+            </tr>
+          </tbody>
         @endif
     </table>
   </div>

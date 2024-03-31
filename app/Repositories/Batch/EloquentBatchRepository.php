@@ -26,6 +26,9 @@ class EloquentBatchRepository implements BatchRepository
     public function fetchActiveBatch()
     {
         $query_builder = Batch::whereDate('start_date', '<=', Carbon::today())->whereDate('end_date', '>=', Carbon::today());
+        if($query_builder->first() === null){
+            $query_builder = $this->fetchBatchBuilder()->orderBy('id', 'DESC');
+        }
         return $query_builder;
     }
 
