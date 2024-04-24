@@ -13,7 +13,7 @@ class Student extends Model
 
     protected $table = 'students';
     protected $fillable = [
-        'name', 'email', 'location_id', 'batch_id', 'gender', 'birth_date', 'education', 'city', 'address', 'phone_number', 'ktp_file', 'ijazah_file', 'program', 'ssw_status', 'jft_status', 'status'
+        'name', 'email', 'location_id', 'batch_id', 'teacher_id', 'gender', 'birth_date', 'education', 'city', 'address', 'phone_number', 'ktp_file', 'ijazah_file', 'program', 'ssw_status', 'jft_status', 'status'
     ];
 
     public function location(): HasOne
@@ -24,6 +24,11 @@ class Student extends Model
     public function batch(): HasOne
     {
         return $this->hasOne(Batch::class, 'id', 'batch_id');
+    }
+
+    public function teacher(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'teacher_id');
     }
 
     public function transaction(): HasOne

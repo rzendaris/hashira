@@ -30,7 +30,7 @@
 
   <h5 class="card-header">Students</h5>
 
-  @if(isset($data['stundents']))
+  @if(isset($data['students']))
     <div class="container">
       <div class="row justify-content-center">
         <div class="mb-1 col-3">
@@ -43,7 +43,7 @@
   @endif
 
 
-  @if(isset($data['stundents']))
+  @if(isset($data['students']))
     @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 4)
       @if(!isset($data['material']))
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">

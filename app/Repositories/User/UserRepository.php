@@ -8,6 +8,7 @@ interface UserRepository {
     public function fetchUser();
     public function fetchUserById($id);
     public function fetchAccountManager();
+    public function fetchTeacher();
     public function insertUser(UserRequest $request);
     public function updateUser(UserUpdateRequest $request);
     public function deleteUser($id);

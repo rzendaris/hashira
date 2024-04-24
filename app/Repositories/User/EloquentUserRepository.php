@@ -30,12 +30,21 @@ class EloquentUserRepository implements UserRepository
         return $account_manager;
     }
 
+    public function fetchTeacher()
+    {
+        $teachers = $this->fetchUser()->where('role_id', 4)->get();
+        return $teachers;
+    }
+
     public function insertUser(UserRequest $request)
     {
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->role_id = $request->role_id;
+        if($request->role_id === '4' || $request->role_id === '5'){
+            $user->location_id = $request->location_id;
+        }
         $user->password = bcrypt($request->password);
         $user->save();
         return $user;

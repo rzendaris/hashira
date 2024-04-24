@@ -27,8 +27,8 @@ class StudentRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'email' => 'unique:students,email',
-            'location_id' => 'required|exists:location,id',
             'batch_id' => 'required|exists:batch,id',
+            'teacher_id' => 'required|exists:users,id',
             'address' => 'required',
             'phone_number' => 'required|max:255',
             'installment' => 'required',

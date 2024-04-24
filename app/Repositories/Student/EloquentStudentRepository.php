@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Student;
 use App\Models\Transaction;
 use App\Models\Payment;
+use App\Models\User;
 use App\Http\Requests\StudentRequest;
 use App\Http\Requests\StudentUpdateRequest;
 use App\Traits\Upload;
@@ -18,7 +19,7 @@ class EloquentStudentRepository implements StudentRepository
 
     public function fetchStudent()
     {
-        $query_builder = Student::with(['batch', 'report'])->where('status', 1);
+        $query_builder = Student::with(['batch', 'report', 'teacher'])->where('status', 1);
         return $query_builder;
     }
 
@@ -32,18 +33,20 @@ class EloquentStudentRepository implements StudentRepository
     {
         $student = $this->fetchStudent();
         if($user->location_id !== NULL){
-            $student = $student->where('location_id', $user->location_id);
+            $student = $student->where('teacher_id', $user->id);
         }
         return $student;
     }
 
     public function insertStudent(StudentRequest $request)
     {
+        $teacher = User::where('id', $request->teacher_id)->first();
         $student = new Student;
         $student->name = $request->name;
         $student->email = $request->email;
-        $student->location_id = $request->location_id;
+        $student->location_id = $teacher->location_id;
         $student->batch_id = $request->batch_id;
+        $student->teacher_id = $teacher->id;
         $student->address = $request->address;
         $student->phone_number = $request->phone_number;
         $student->gender = $request->gender;

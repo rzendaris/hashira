@@ -15,6 +15,7 @@ use App\Repositories\Student\EloquentStudentRepository;
 use App\Repositories\Student\EloquentPotentialStudentRepository;
 use App\Repositories\Batch\EloquentBatchRepository;
 use App\Repositories\Location\EloquentLocationRepository;
+use App\Repositories\User\EloquentUserRepository;
 use App\Http\Requests\StudentRequest;
 use App\Http\Requests\StudentUpdateRequest;
 use App\Http\Requests\PotentialStudentRequest;
@@ -30,29 +31,33 @@ class StudentController extends Controller
         EloquentStudentRepository $studentRepository,
         EloquentLocationRepository $locationRepository,
         EloquentBatchRepository $batchRepository,
+        EloquentUserRepository $userRepository,
         EloquentPotentialStudentRepository $potentialStudentRepository
     ) {
         $this->studentRepository = $studentRepository;
         $this->locationRepository = $locationRepository;
         $this->batchRepository = $batchRepository;
         $this->potentialStudentRepository = $potentialStudentRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function index(): View
     {
         $students = $this->studentRepository->fetchStudent();
         if(Auth::user()->role_id == 4 || Auth::user()->role_id == 5){
-            $students = $students->where('location_id', Auth::user()->location_id)->get();
+            $students = $students->where('teacher_id', Auth::user()->id)->get();
         } else {
             $students = $students->get();
         }
         $locations = $this->locationRepository->fetchLocation();
         $batchs = $this->batchRepository->fetchBatch();
+        $teachers = $this->userRepository->fetchTeacher();
 
         $data = array(
             "students" => $students,
             "locations" => $locations,
-            "batchs" => $batchs
+            "batchs" => $batchs,
+            "teachers" => $teachers
         );
         return view('menu.students.student')->with('data', $data);
     }

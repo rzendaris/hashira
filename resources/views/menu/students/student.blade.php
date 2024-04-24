@@ -41,6 +41,7 @@
           <th>Name</th>
           <th>Batch</th>
           <th>Location</th>
+          <th>Teacher</th>
           <th>Phone Number</th>
           <th>Status</th>
           <th>Actions</th>
@@ -53,6 +54,7 @@
             <td><a class="nav-link" href="{{ url('admin/students/'.$data['students'][$i]->id) }}"><strong>{{ $data['students'][$i]->name }}</strong></a></td>
             <td>{{ $data['students'][$i]->batch->name }}</td>
             <td>{{ $data['students'][$i]->location->name }}</td>
+            <td>{{ $data['students'][$i]->teacher->name }}</td>
             <td>{{ $data['students'][$i]->phone_number }}</td>
             @if($data['students'][$i]->status === 1)
               <td><span class="badge bg-label-primary me-1">Active</span></td>
@@ -136,10 +138,10 @@
                 </div>
                 <div class="row g-2">
                   <div class="col mb-0">
-                    <label for="emailWithTitle" class="form-label">Location</label>
-                      <select class="form-select" id="location_id" name="location_id" required>
-                        @foreach($data['locations'] as $location)
-                          <option value="{{ $location->id }}">{{ $location->name }}</option>
+                    <label for="dobWithTitle" class="form-label">Teacher</label>
+                      <select class="form-select" id="teacher_id" name="teacher_id" required>
+                        @foreach($data['teachers'] as $teacher)
+                          <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
                         @endforeach
                       </select>
                   </div>

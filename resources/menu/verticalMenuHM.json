@@ -29,6 +29,21 @@
         "name": "Student Active",
         "icon": "menu-icon tf-icons bx bx bx-user-pin",
         "slug": "pages-account-settings"
+      },
+      {
+        "url": "/admin/potential-students",
+        "name": "Potential Student",
+        "icon": "menu-icon tf-icons bx bx bx-user-pin",
+        "slug": "pages-account-settings"
+      },
+      {
+        "menuHeader": "Finance"
+      },
+      {
+        "url": "/admin/invoice",
+        "name": "Invoice",
+        "icon": "menu-icon tf-icons bx bx bx-task",
+        "slug": "pages-account-settings"
       }
     ]
   }
