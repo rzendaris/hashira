@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/configurations/location/update', [ConfigurationController::class, 'updateLocation'])->name('location-update');
     Route::get('/admin/configurations/batch', [ConfigurationController::class, 'indexBatch'])->name('batch-view');
     Route::post('/admin/configurations/batch/create', [ConfigurationController::class, 'createBatch'])->name('batch-create');
+    Route::post('/admin/configurations/batch/update', [ConfigurationController::class, 'updateBatch'])->name('batch-update');
 
     Route::get('/admin/invoice', [PaymentController::class, 'invoice'])->name('invoice-view');
     Route::post('/admin/invoice/upload-payment', [PaymentController::class, 'uploadPaymentProof'])->name('invoice-payment-proof');

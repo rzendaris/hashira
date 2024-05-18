@@ -7,6 +7,7 @@ use Auth;
 use Carbon\Carbon;
 use App\Models\Batch;
 use App\Http\Requests\BatchRequest;
+use App\Http\Requests\BatchUpdateRequest;
 
 class EloquentBatchRepository implements BatchRepository
 {
@@ -39,6 +40,18 @@ class EloquentBatchRepository implements BatchRepository
         $batch->start_date = $request->start_date;
         $batch->end_date = $request->end_date;
         $batch->save();
+        return $batch;
+    }
+
+    public function updateBatch(BatchUpdateRequest $request)
+    {
+        $batch = $this->fetchBatchBuilder()->where('id', $request->id)->first();
+        if(isset($batch)){
+            $batch->name = $request->name;
+            $batch->start_date = $request->start_date;
+            $batch->end_date = $request->end_date;
+            $batch->save();
+        }
         return $batch;
     }
 }

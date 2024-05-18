@@ -28,13 +28,17 @@
       </div>
   @endif
   <h5 class="card-header">Students</h5>
-  @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 5)
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-      Add new Student
-    </button>
-  @endif
+  <div class="card-body">
+    <div class="row gy-3">
+      @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 5)
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+          Add new Student
+        </button>
+      @endif
+    </div>
+  </div>
   <div class="table-responsive text-nowrap">
-    <table class="table">
+    <table id="ex" class="table table-striped">
       <thead>
         <tr>
           <th>No</th>
@@ -358,6 +362,9 @@
 
 
 @section('page-script')
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 <script>
 
     function getProgramSelected(selectObject) {
@@ -372,6 +379,7 @@
       }
     }
     $(document).ready(function () {
+      $('#ex').DataTable();
     });
 </script>
 @endsection

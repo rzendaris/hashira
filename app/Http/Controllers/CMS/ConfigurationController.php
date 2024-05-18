@@ -13,6 +13,7 @@ use App\Http\Requests\LocationRequest;
 use App\Http\Requests\LocationUpdateRequest;
 use App\Http\Requests\StudentUpdateRequest;
 use App\Http\Requests\BatchRequest;
+use App\Http\Requests\BatchUpdateRequest;
 
 class ConfigurationController extends Controller
 {
@@ -62,6 +63,12 @@ class ConfigurationController extends Controller
     public function createBatch(BatchRequest $request): RedirectResponse
     {
         $this->batchRepository->insertBatch($request);
+        return redirect()->route('batch-view');
+    }
+
+    public function updateBatch(BatchUpdateRequest $request): RedirectResponse
+    {
+        $this->batchRepository->updateBatch($request);
         return redirect()->route('batch-view');
     }
 }
