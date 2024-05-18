@@ -58,6 +58,8 @@ class DashboardController extends Controller
             foreach($batchs as $batch){
                 $number_of_student = $this->studentRepository->fetchStudent();
                 if(Auth::user()->location_id !== NULL){
+                    $number_of_student = $number_of_student->where('location_id', Auth::user()->location_id);
+                } else {
                     $number_of_student = $number_of_student->where('location_id', $location->id);
                 }
                 $number_of_student = $number_of_student->where('batch_id', $batch->id)->count();

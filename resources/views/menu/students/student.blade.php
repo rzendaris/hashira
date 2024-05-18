@@ -243,17 +243,29 @@
                   <div class="row">
                     <div class="col mb-3">
                       <label for="nameWithTitle" class="form-label">Name</label>
-                      <input type="text" id="name" name="name" class="form-control" value="{{ $student->name }}" placeholder="Enter Name" required>
+                      @if(Auth::user()->role_id === 1)
+                        <input type="text" id="name" name="name" class="form-control" value="{{ $student->name }}" placeholder="Enter Name" required>
+                      @else
+                        <input type="text" id="name" name="name" class="form-control" value="{{ $student->name }}" placeholder="Enter Name" disabled>
+                      @endif
                     </div>
                   </div>
                   <div class="row g-2">
                     <div class="col mb-0">
                       <label for="emailWithTitle" class="form-label">Email</label>
-                      <input type="email" id="email" name="email" class="form-control" value="{{ $student->email }}" placeholder="xxxx@xxx.xx">
+                      @if(Auth::user()->role_id === 1)
+                        <input type="email" id="email" name="email" class="form-control" value="{{ $student->email }}" placeholder="xxxx@xxx.xx" required>
+                      @else
+                        <input type="email" id="email" name="email" class="form-control" value="{{ $student->email }}" placeholder="xxxx@xxx.xx" disabled>
+                      @endif
                     </div>
                     <div class="col mb-0">
                       <label for="dobWithTitle" class="form-label">Phone Number</label>
-                      <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ $student->phone_number }}" placeholder="+62..." required>
+                      @if(Auth::user()->role_id === 1)
+                        <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ $student->phone_number }}" placeholder="+62..." required>
+                      @else
+                        <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ $student->phone_number }}" placeholder="+62..." disabled>
+                      @endif
                     </div>
                   </div>
                   <div class="row g-2">
@@ -276,18 +288,22 @@
                     </div>
                     <div class="col mb-0">
                       <label for="dobWithTitle" class="form-label">Ujian SSW</label>
-                        <select class="form-select" id="ssw_status" name="ssw_status" required>
-                          <option value="{{ $student->ssw_status }}">{{ $student->ssw_status }}</option>
-                          <option value="Belum">Belum</option>
-                          <option value="Lulus">Lulus</option>
-                          <option value="Gagal">Gagal</option>
-                        </select>
+                        @if($student->program === 'SSW')
+                          <select class="form-select" id="ssw_status" name="ssw_status" required>
+                            <option value="{{ $student->ssw_status }}">{{ $student->ssw_status }}</option>
+                            <option value="Belum">Belum</option>
+                            <option value="Lulus">Lulus</option>
+                            <option value="Gagal">Gagal</option>
+                          </select>
+                        @else
+                          <input type="text" id="ssw_status" name="ssw_status" class="form-control" value="{{ $student->ssw_status }}" disabled/>
+                        @endif
                     </div>
                   </div>
                   <div class="row g-2">
                     <div class="col mb-0">
                       <label for="emailWithTitle" class="form-label">Location</label>
-                        <select class="form-select" id="location_id" name="location_id" required>
+                        <select class="form-select" id="location_id" name="location_id" disabled>
                           <option value="{{ $student->location->id }}">{{ $student->location->name }}</option>
                           @foreach($data['locations'] as $location)
                             @if($location->id !== $student->location->id)
@@ -298,7 +314,7 @@
                     </div>
                     <div class="col mb-0">
                       <label for="dobWithTitle" class="form-label">Batch</label>
-                        <select class="form-select" id="batch_id" name="batch_id" required>
+                        <select class="form-select" id="batch_id" name="batch_id" disabled>
                           <option value="{{ $student->batch->id }}">{{ $student->batch->name }}</option>
                           @foreach($data['batchs'] as $batch)
                             @if($batch->id !== $student->batch->id)
@@ -311,7 +327,11 @@
                   <div class="row">
                     <div class="col mb-3">
                       <label for="nameWithTitle" class="form-label">Address</label>
-                      <input type="text" id="address" name="address" class="form-control" value="{{ $student->address }}" placeholder="Enter Name" required>
+                      @if(Auth::user()->role_id === 1)
+                        <input type="text" id="address" name="address" class="form-control" value="{{ $student->address }}" placeholder="Enter Name" required>
+                      @else
+                        <input type="text" id="address" name="address" class="form-control" value="{{ $student->address }}" placeholder="Enter Name" disabled>
+                      @endif
                     </div>
                   </div>
                   <input type="hidden" id="id" name="id" value="{{ $student->id }}"/>

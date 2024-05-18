@@ -97,12 +97,14 @@
             @endif
             <td>
               <div class="dropdown">
+                @if(Auth::user()->role_id !== '2')
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                 <div class="dropdown-menu">
                   <button type="button" class="dropdown-item btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#editModal{{ $data['invoices'][$i]->id }}">
                     <i class="bx bx-edit-alt me-1"></i> Upload Payment Proof
                   </button>
                 </div>
+                @endif
               </div>
             </td>
           </tr>

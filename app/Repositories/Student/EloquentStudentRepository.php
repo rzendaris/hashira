@@ -106,15 +106,28 @@ class EloquentStudentRepository implements StudentRepository
     public function updateStudent(StudentUpdateRequest $request)
     {
         $student = $this->fetchStudentById($request->id);
-        $student->name = $request->name;
-        $student->email = $request->email;
-        $student->save();
+        $student->jft_status = $request->jft_status;
+        $student->ssw_status = $request->ssw_status;
+
+        if ($request->filled('name')){
+            $student->name = $request->name;
+        }
+        if ($request->filled('email')){
+            $student->email = $request->email;
+        }
+        if ($request->filled('phone_number')){
+            $student->phone_number = $request->phone_number;
+        }
+        if ($request->filled('address')){
+            $student->address = $request->address;
+        }
         if ($request->hasFile('ktp_file')) {
             $student->ktp_file = $this->UploadFile($request->file('ktp_file'), 'ktp');
         }
         if ($request->hasFile('ijazah_file')) {
             $student->ijazah_file = $this->UploadFile($request->file('ijazah_file'), 'ijazah');
         }
+        $student->save();
         return $student;
     }
 
