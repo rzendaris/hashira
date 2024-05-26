@@ -55,9 +55,9 @@ class UserController extends Controller
         return redirect()->route('user-view');
     }
 
-    public function delete(UserUpdateRequest $request): RedirectResponse
+    public function delete($user_id): RedirectResponse
     {
-        $this->userRepository->deleteUser($request->id);
+        $this->userRepository->deleteUser($user_id);
         return redirect()->route('user-view');
     }
 }

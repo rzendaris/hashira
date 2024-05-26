@@ -55,6 +55,9 @@ class EloquentUserRepository implements UserRepository
         $user = $this->fetchUserById($request->id);
         $user->name = $request->name;
         $user->email = $request->email;
+        if(isset($request->password)){
+            $user->password = bcrypt($request->password);
+        }
         $user->save();
         return $user;
     }
@@ -63,8 +66,9 @@ class EloquentUserRepository implements UserRepository
     {
         $user = $this->fetchUserById($id);
         if(isset($user)){
-            $user->delete();
+            $user->status = 0;
         }
+        $user->save();
         return $user;
     }
 }

@@ -197,6 +197,49 @@
       </div>
     </div>
     <!-- Edit Dialog -->
+    <div class="card-body">
+      <div class="row gy-3">
+        <form method="get" action="{{url('admin/users/delete/'.$user->id)}}" enctype="multipart/form-data">
+          {{csrf_field()}}
+          <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalCenterTitle">Are you sure to deleting User?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="nameWithTitle" class="form-label">Name</label>
+                      <input type="text" id="name" name="name" class="form-control" value="{{ $user->name }}" placeholder="Enter Name" disabled>
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col mb-0">
+                      <label for="emailWithTitle" class="form-label">Email</label>
+                      <input type="email" id="email" name="email" class="form-control" value="{{ $user->email }}" placeholder="xxxx@xxx.xx" disabled>
+                    </div>
+                    <div class="col mb-0">
+                      <label for="dobWithTitle" class="form-label">Role</label>
+                      <select class="form-control" id="role_id" name="role_id" disabled>
+                        <option value="{{ $user->role_id }}">{{ $user->role->role_name }}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <input type="hidden" name="id" id="id" value="{{ $user->id }}">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Delete Dialog -->
   @endforeach
 </div>
 <!--/ Basic Bootstrap Table -->
