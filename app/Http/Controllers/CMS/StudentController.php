@@ -41,20 +41,31 @@ class StudentController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
         $students = $this->studentRepository->fetchStudent();
-        if(Auth::user()->role_id == 4 || Auth::user()->role_id == 5){
-            $students = $students->where('teacher_id', Auth::user()->id)->get();
-        } else {
-            $students = $students->get();
-        }
         $locations = $this->locationRepository->fetchLocation();
         $batchs = $this->batchRepository->fetchBatch();
         $teachers = $this->userRepository->fetchTeacher();
 
+        if(Auth::user()->role_id == 4){
+            $students = $students->where('teacher_id', Auth::user()->id);
+        } else if (Auth::user()->role_id == 5) {
+            $students = $students->where('location_id', Auth::user()->location_id);
+        }
+
+        if($request->batch_filter){
+            $students = $students->where('batch_id', $request->batch_filter);
+        }
+        if($request->location_id){
+            $students = $students->where('location_id', $request->location_id);
+        }
+        if($request->teacher_id){
+            $students = $students->where('teacher_id', $request->teacher_id);
+        }
+
         $data = array(
-            "students" => $students,
+            "students" => $students->get(),
             "locations" => $locations,
             "batchs" => $batchs,
             "teachers" => $teachers

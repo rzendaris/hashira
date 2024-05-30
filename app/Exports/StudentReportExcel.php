@@ -9,6 +9,7 @@ use App\Exports\StudentReportExport;
 use App\Exports\StudentReportResultExport;
 use App\Repositories\Material\EloquentMaterialRepository;
 use App\Repositories\Report\EloquentStudentReportRepository;
+use App\Repositories\Student\EloquentStudentRepository;
 
 class StudentReportExcel implements WithMultipleSheets
 {
@@ -16,15 +17,18 @@ class StudentReportExcel implements WithMultipleSheets
 
     protected $materialRepository;
     protected $studentReportRepository;
+    protected $studentRepository;
     protected $batch;
 
     public function __construct(
         EloquentMaterialRepository $materialRepository,
         EloquentStudentReportRepository $studentReportRepository, 
+        EloquentStudentRepository $studentRepository, 
         $batch)
     {
         $this->materialRepository = $materialRepository;
         $this->studentReportRepository = $studentReportRepository;
+        $this->studentRepository = $studentRepository;
         $this->batch = $batch;
     }
 
@@ -35,7 +39,7 @@ class StudentReportExcel implements WithMultipleSheets
     {
         $sheets = [
             new StudentReportExport($this->materialRepository, $this->batch),
-            new StudentReportResultExport($this->materialRepository, $this->studentReportRepository, $this->batch),
+            new StudentReportResultExport($this->materialRepository, $this->studentReportRepository, $this->studentRepository, $this->batch),
         ];
 
         return $sheets;

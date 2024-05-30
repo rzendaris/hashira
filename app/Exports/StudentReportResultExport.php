@@ -19,16 +19,19 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 
 use App\Repositories\Material\EloquentMaterialRepository;
 use App\Repositories\Report\EloquentStudentReportRepository;
+use App\Repositories\Student\EloquentStudentRepository;
 
 class StudentReportResultExport implements FromView, WithStyles, WithColumnWidths, WithTitle
 {
     protected $materialRepository;
     protected $studentReportRepository;
+    protected $studentRepository;
     protected $batch;
 
-    public function __construct(EloquentMaterialRepository $materialRepository, EloquentStudentReportRepository $studentReportRepository, $batch) {
+    public function __construct(EloquentMaterialRepository $materialRepository, EloquentStudentReportRepository $studentReportRepository, EloquentStudentRepository $studentRepository, $batch) {
         $this->materialRepository = $materialRepository;
         $this->studentReportRepository = $studentReportRepository;
+        $this->studentRepository = $studentRepository;
         $this->batch = $batch;
     }
 
@@ -43,9 +46,7 @@ class StudentReportResultExport implements FromView, WithStyles, WithColumnWidth
             $key = $dt->format("F").' '.$dt->format("Y");
             $date_range[$key][] = $dt->format("d F Y");
 
-            $students_report = $this->studentReportRepository->fetchStudentReport()
-            ->whereRelation('student', 'batch_id', $this->batch->id)
-            ->whereRelation('student', 'location_id', Auth::user()->location_id);
+            $student = $this->studentRepository->fetchStudentFilterByTeacher(Auth::user());
 
             $weekend = array('Sunday', 'Saturday');
 
@@ -59,15 +60,13 @@ class StudentReportResultExport implements FromView, WithStyles, WithColumnWidth
                 );
             }
             
-            foreach($students_report->get() as $student_report){
-                $students_data = $students_report->whereRelation('student', 'id', $student_report->id)->whereDate('created_at', $dt->format("Y-m-d"))->first();
+            foreach($student->get() as $student_report){
+                $students_data = $this->studentReportRepository->fetchStudentReport()->whereRelation('student', 'id', $student_report->id)->whereDate('created_at', $dt->format("Y-m-d"))->first();
                 if(isset($students_data)){
-                    $arr_data = array(
-                        'score' => $student_report->score
-                    );
+                    $arr_data['score'] = $students_data->score;
                 }
+                $students['students'][$student_report->name][] = $arr_data;
             }
-            $students['students'][$student_report->student->name][] = $arr_data;
         }
 
         return view('menu.exports.students-report-result', [
@@ -78,9 +77,7 @@ class StudentReportResultExport implements FromView, WithStyles, WithColumnWidth
 
     public function styles(Worksheet $sheet)
     {
-        $count_student = $this->studentReportRepository->fetchStudentReport()
-            ->whereRelation('student', 'batch_id', $this->batch->id)
-            ->whereRelation('student', 'location_id', Auth::user()->location_id)->count();
+        $count_student = $this->studentRepository->fetchStudentFilterByTeacher(Auth::user())->count();
         
         $sheet->getStyle(8)->getFont()->setBold(true);
         $sheet->getStyle(8)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);

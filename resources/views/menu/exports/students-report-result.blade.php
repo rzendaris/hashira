@@ -63,6 +63,9 @@
             @endforeach
             <td style="border: 1px solid black; border-collapse: collapse;"></td>
         </tr>
+        @php
+            $no++;
+        @endphp
     @endforeach
     </tbody>
 </table>

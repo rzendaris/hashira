@@ -86,6 +86,6 @@ class StudentReportController extends Controller
     {
         $batch = $this->batchRepository->fetchActiveBatch()->first();
         $filename = 'Laporan '.Auth::user()->location->name.' Batch '.$batch->name.'.xlsx';
-        return Excel::download(new StudentReportExcel($this->materialRepository, $this->studentReportRepository, $batch), $filename);
+        return Excel::download(new StudentReportExcel($this->materialRepository, $this->studentReportRepository, $this->studentRepository, $batch), $filename);
     }
 }

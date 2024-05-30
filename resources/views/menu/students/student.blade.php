@@ -28,6 +28,50 @@
       </div>
   @endif
   <h5 class="card-header">Students</h5>
+  
+  @if(Auth::user()->role_id === 1 || Auth::user()->role_id === 2 || Auth::user()->role_id === 5)
+    <div class="table-responsive text-nowrap">
+      <form method="get" action="{{url('/admin/students')}}">
+        <div class="card-body">
+          <div class="row">
+            <div class="col mb-3">
+              <label for="emailWithTitle" class="form-label">Filter By Batch</label>
+              <select class="form-select" id="batch_filter" name="batch_filter">
+                <option value="">--</option>
+                @foreach($data['batchs'] as $filter)
+                  <option value="{{ $filter->id }}">{{ $filter->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            @if(Auth::user()->role_id !== 5)
+              <div class="col mb-3">
+                <label for="emailWithTitle" class="form-label">Filter By Location</label>
+                <select class="form-select" id="location_id" name="location_id">
+                  <option value="">--</option>
+                  @foreach($data['locations'] as $filter)
+                    <option value="{{ $filter->id }}">{{ $filter->name }}</option>
+                  @endforeach
+                </select>
+              </div>
+            @endif
+            <div class="col mb-3">
+              <label for="emailWithTitle" class="form-label">Filter By Teacher</label>
+              <select class="form-select" id="teacher_id" name="teacher_id">
+                <option value="">--</option>
+                @foreach($data['teachers'] as $filter)
+                  <option value="{{ $filter->id }}">{{ $filter->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col mb-2">
+              <label for="emailWithTitle" class="form-label"></label>
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  @endif
   <div class="card-body">
     <div class="row gy-3">
       @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 5)
